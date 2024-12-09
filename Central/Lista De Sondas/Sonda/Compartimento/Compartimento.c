@@ -33,7 +33,7 @@ void ImprimiLista(Compartimento *lista){
     Celula* pAux;
     pAux = lista->primeiro->pProx;
     while(pAux != NULL){
-    printf("%s %.0lf\n", pAux->rocha.Peso, pAux->rocha.Valor);
+    printf("%0.lf %d\n", pAux->rocha.Peso, pAux->rocha.Valor);
         pAux = pAux->pProx; /* próxima célula */
     }
 }
@@ -49,14 +49,13 @@ double PesoAtual(Compartimento *lista){
         Peso += (pAux->rocha.Peso);
         pAux = pAux->pProx;
     }
-
     return Peso;
 }
 
-int TrocaRocha(Compartimento *lista, RochaMineral *rocha){
+/*int TrocaRocha(Compartimento *lista, RochaMineral *rocha){
     Celula* pAux;
     pAux =  lista->primeiro->pProx;
-    while(strcmp(pAux->rocha.Valor, rocha->Valor)!=0){
+    while(pAux->rocha.Valor != rocha->Valor){
         pAux = pAux->pProx;
     }
     if(pAux->rocha.Peso > rocha->Peso){
@@ -65,13 +64,18 @@ int TrocaRocha(Compartimento *lista, RochaMineral *rocha){
     } else {
         return 0;
     }
-}
+}*/
 
-int InsereRocha(Compartimento *lista, Celula* rocha, double PesoMax){
+int InsereRocha(Compartimento *lista, Celula* rocha){
+    if(VerificaListaVazia(lista)){
+        return 0;
+    }
     lista->ultimo->pProx = (Celula*) malloc(sizeof(Celula));
     lista->ultimo = lista->ultimo->pProx;
     *lista->ultimo = *rocha;
     lista->ultimo->pProx = NULL;
+    lista->PesoTotal += rocha->rocha.Peso;
+    
     return 1;
 }
 
@@ -91,32 +95,27 @@ Celula* RemoveRocha(Compartimento *lista, Celula* rocha){
         pAux3 = pAux;
         lista->ultimo = lista->primeiro;
         lista->ultimo->pProx = NULL;
-
     } 
-    else if((strcmp(pAux->rocha.Valor,rocha->rocha.Valor) == 0) && (pAux->rocha.Peso == rocha->rocha.Peso)){ 
+    else if((rocha->rocha.Valor== pAux->rocha.Valor) && (pAux->rocha.Peso == rocha->rocha.Peso)){ 
     //caso esteja retirando o primeiro da lista
         pAux3 = pAux;
         lista->primeiro = lista->primeiro->pProx;
     } 
-    else if((strcmp(lista->ultimo->rocha.Valor,rocha->rocha.Valor) == 0) 
+    else if ((lista->ultimo->rocha.Valor == rocha->rocha.Valor)
     && (lista->ultimo->rocha.Peso == rocha->rocha.Peso)){
     //caso esteja retirando do final da lista
-
         pAux3 = lista->ultimo;
         while(pAux->pProx->pProx != NULL){          
             pAux = pAux->pProx;
-
         }
         lista->ultimo = pAux;
         lista->ultimo->pProx = NULL;
-
     } 
     else{
     //caso esteja retirando do meio
         while(pAux != NULL){          
             pAux2 = pAux;
-
-            if((strcmp(pAux->rocha.Valor,rocha->rocha.Valor) == 0) && (pAux->rocha.Peso == rocha->rocha.Peso)){
+            if((pAux->rocha.Valor == rocha->rocha.Valor) && (pAux->rocha.Peso == rocha->rocha.Peso)){
                 pAux3 = pAux;
             }
             pAux = pAux->pProx;

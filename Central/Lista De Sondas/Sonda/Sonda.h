@@ -10,4 +10,5 @@ typedef struct {
 } Sonda;
 
 void InicializaSonda(Sonda *NovaSonda, int Identificador, double PesoMax);
+void ImprimeSonda(Sonda NovaSonda);
 #endif

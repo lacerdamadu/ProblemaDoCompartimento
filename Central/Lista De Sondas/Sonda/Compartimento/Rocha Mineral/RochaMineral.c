@@ -8,7 +8,7 @@ void InicializaRocha(RochaMineral* Rocha, double Peso, int Valor){
 
 void ImprimeRocha(RochaMineral *Rocha){
     printf("Peso: %.0lf\n", Rocha->Peso);
-    printf("Valor: %s\n", Rocha->Valor);
+    printf("Valor: %d\n", Rocha->Valor);
 }
 
 void setPesoRocha(RochaMineral *Rocha, double Peso){
