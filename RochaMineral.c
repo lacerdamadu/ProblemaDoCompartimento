@@ -1,9 +1,10 @@
 #include "RochaMineral.h"
 #include <stdio.h>
 
-void InicializaRocha(RochaMineral* Rocha, double Peso, int Valor){
+void InicializaRocha(RochaMineral* Rocha, double Peso, int Valor, int id){
     setPesoRocha(Rocha, Peso);
     setValor(Rocha, Valor);
+    setId(Rocha, id);
 }
 
 void ImprimeRocha(RochaMineral *Rocha){
@@ -23,4 +24,11 @@ void setValor(RochaMineral *Rocha, int Valor){
 }
 int getValor(RochaMineral *Rocha){
     return(Rocha->Valor);
+}
+
+void setId(RochaMineral *Rocha, int id){
+    Rocha->id = id;
+}
+int getId(RochaMineral *Rocha){
+    return(Rocha->id);
 }

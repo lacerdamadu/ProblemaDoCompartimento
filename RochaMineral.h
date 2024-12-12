@@ -8,7 +8,7 @@ typedef struct{
 } RochaMineral;
 
 
-void InicializaRocha(RochaMineral* rocha, double Peso, int Valor);
+void InicializaRocha(RochaMineral* rocha, double Peso, int Valor, int id);
 
 void ImprimeRocha(RochaMineral *Rocha);
 
@@ -17,6 +17,9 @@ double getPesoRocha(RochaMineral *Rocha);
 
 void setValor(RochaMineral *Rocha, int Valor);
 int getValor(RochaMineral *Rocha);
+
+void setId(RochaMineral *Rocha, int id);
+int getId(RochaMineral *Rocha);
 
 
 #endif // ROCHAMINERAL_H_INCLUDED

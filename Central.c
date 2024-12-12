@@ -9,14 +9,14 @@ int EntradaPorArquivo(TSondas *ListaSondas){
     printf("Digite o nome do arquivo: ");
     char nome[STRING];
     scanf("%s", nome);
-    printf("oi");
+    
     FILE* entrada;
     entrada = fopen(nome, "r");
     if(entrada==NULL){
         printf("Erro ao ler o arquivo.");
         return 0;
     }
-    printf("oi");
+    
     int identificador = 0;
     double PesoMax = 40; // Capacidade de armazenamento
     FazListaVazia(ListaSondas);
@@ -33,7 +33,7 @@ int EntradaPorArquivo(TSondas *ListaSondas){
     Sonda temporaria;
     int id = 10;// identificador diferente para diferenciar das sondas definitivas
     PesoMax = 1000;
-    printf("oi");
+
     InicializaSonda(&temporaria, id, PesoMax);
 
     fscanf(entrada,"%d", &numrochas);
@@ -43,30 +43,36 @@ int EntradaPorArquivo(TSondas *ListaSondas){
     for(int j=0; j<numrochas; j++){
         fscanf(entrada, "%d""%d", &peso, &valor);
         RochaMineral novarocha;
-        InicializaRocha(&novarocha, peso, valor);
+        int id2 = j;
+        InicializaRocha(&novarocha, peso, valor, id2);
         Celula novarochaa;
-        novarocha.id = j;
         novarochaa.rocha = novarocha;
         InsereRocha(&temporaria.CompartmentoS, &novarochaa);//insere todas as rochas na sonda temporária para depois redistribuir
         
         elementos[j] = novarocha.id;
     }
-    printf("oi");
     Redistribuicao(ListaSondas, &temporaria, tamanho, elementos);
 }
 void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho, int elementos[]){
     printf("oi");
-    int *x = (int*) malloc((tamanho+1) * sizeof(int));
-    int linhas = CalculaNumCombinacoes(linhas);
+    int linhas = 0, *x;
+    x = malloc((tamanho+1) * sizeof(int));
+    linhas = CalculaNumCombinacoes(tamanho);
+    printf("%d", linhas);
     
-
     int** matind = (int**) malloc(sizeof(int*) * linhas);
     for(int i=0; i <= tamanho; i++){
         matind[i] = (int*) malloc(sizeof(int) * tamanho+1);
     }
-
     memset(matind, -1, sizeof(matind));
-
+    for(int j=0; j<linhas; j++){
+        for(int k=0;k<tamanho; k++){
+            printf("%d", *matind[k]);
+        }
+        printf("\n");
+    }
+}
+/*
     for (int k = 0; k <= tamanho; k++){
         combinacao_simples(tamanho, k, x, 0, 0, matind);
     }
@@ -89,7 +95,7 @@ void combinacao_simples(int tamanho, int r, int x[], int next, int k, int **mati
         }
     }
 }
-
+*/
 int Fatorial(int tamanho){
     int res = 1;
     for (int i = 1; i <= tamanho; i++){
