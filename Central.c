@@ -55,7 +55,8 @@ int EntradaPorArquivo(TSondas *ListaSondas){
 }
 
 void combinacao_simples(int n, int r, int x[], int next, int k, int **matrizindices, int *index){
-  if (k == r) {
+    printf("oi");
+    if (k == r) {
     for (int i = 0; i < r; i++) {
       matrizindices[*index][i] = x[i];
     }
@@ -69,7 +70,8 @@ void combinacao_simples(int n, int r, int x[], int next, int k, int **matrizindi
   }
 }
 
-void todas_combinacoes(int n) {
+void todas_combinacoes(int n){
+    printf("oik");
   int total_matrizindices = (1 << n) - 1;
   int **matrizindices = (int **)malloc(total_matrizindices * sizeof(int *));
 
