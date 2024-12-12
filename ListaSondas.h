@@ -10,7 +10,7 @@ typedef struct {
 } TSondas; 
 
 void FazListaVazia(TSondas* Sondas);
-void InsereSonda(TSondas* Sondas, Sonda* sonda);
-
+int InsereSonda(TSondas* Sondas, Sonda* sonda);
+void ImprimeSonda(TSondas* Sondas);
 
 #endif

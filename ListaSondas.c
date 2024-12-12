@@ -5,7 +5,7 @@ void FazListaVazia(TSondas* Sondas){
     Sondas->Primeiro = InicioArranjo;
     Sondas->Ultimo = Sondas->Primeiro;
 }
-void InsereSonda(TSondas* Sondas, Sonda* sonda){
+int InsereSonda(TSondas* Sondas, Sonda* sonda){
     if (Sondas->Ultimo == MaxTam){
         return 0; /* lista cheia */
     }
