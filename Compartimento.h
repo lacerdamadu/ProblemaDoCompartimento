@@ -25,5 +25,4 @@ int InsereRocha(Compartimento *lista, Celula* rocha);//Insere uma rocha encontra
 Celula* RemoveRocha(Compartimento *lista, Celula* rocha);//Remove a rocha de acordo com a categoria(nome)
 //int VerificaRochaExistente(Compartimento *lista, RochaMineral *rocha);Verifica se já existe uma rocha daquele tipo no compartimento
 
-
 #endif

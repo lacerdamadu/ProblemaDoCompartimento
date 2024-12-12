@@ -50,32 +50,34 @@ int EntradaPorArquivo(TSondas *ListaSondas){
     Redistribuicao(ListaSondas, &temporaria, elementos, tamanho);
 }
 void Redistribuicao(TSondas *Sondas, Sonda *temporaria, RochaMineral elementosparacombinacao[], int tamanhodoselementos){
-    gerarTodasCombinacoes(elementosparacombinacao, tamanhodoselementos);
+    for (int i = Sondas->Primeiro; i < Sondas->Ultimo; i++){
+        gerarTodasCombinacoes(&Sondas->sonda[i], elementosparacombinacao, tamanhodoselementos);
+    }
 }
 
 
-void gerarCombinacoes(RochaMineral elementosparacombinacao[], int tamanhodoselementos, int r, int indicedoauxiliar, RochaMineral auxiliar[], int i){
-    if (indicedoauxiliar == r) {
-        for (int j = 0; j < r; j++) {
+void gerarCombinacoes(Sonda *atual, RochaMineral elementosparacombinacao[], int tamanhodoselementos, int r, int indicedoauxiliar, RochaMineral auxiliar[], int i){
+    int valorcombinaçãotual = 0;
+    if (indicedoauxiliar == r){
+        for (int j = 0; j < r; j++){
             printf("%d ", auxiliar[j].Valor);
+            
         }
         printf("\n");
-    return;
-    }
-
-    if (i >= tamanhodoselementos) {
         return;
     }
-
+    if(i >= tamanhodoselementos){
+        return;
+    }
     auxiliar[indicedoauxiliar] = elementosparacombinacao[i];
-    gerarCombinacoes(elementosparacombinacao, tamanhodoselementos, r, indicedoauxiliar + 1, auxiliar, i + 1);
+    gerarCombinacoes(atual, elementosparacombinacao, tamanhodoselementos, r, indicedoauxiliar + 1, auxiliar, i + 1);
 
-    gerarCombinacoes(elementosparacombinacao, tamanhodoselementos, r, indicedoauxiliar, auxiliar, i + 1);
+    gerarCombinacoes(atual, elementosparacombinacao, tamanhodoselementos, r, indicedoauxiliar, auxiliar, i + 1);
 }
 
-void gerarTodasCombinacoes(RochaMineral elementosparacombinacao[], int tamanhodoselementos){
+void gerarTodasCombinacoes(Sonda *atual, RochaMineral elementosparacombinacao[], int tamanhodoselementos){
     for (int r = 1; r <= tamanhodoselementos; r++) {
         RochaMineral auxiliar[r]; 
-        gerarCombinacoes(elementosparacombinacao, tamanhodoselementos, r, 0, auxiliar, 0);
+        gerarCombinacoes(atual, elementosparacombinacao, tamanhodoselementos, r, 0, auxiliar, 0);
     }
 }
