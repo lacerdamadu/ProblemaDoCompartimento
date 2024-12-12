@@ -51,9 +51,51 @@ int EntradaPorArquivo(TSondas *ListaSondas){
         
         elementos[j] = novarocha.id;
     }
-    Redistribuicao(ListaSondas, &temporaria, tamanho, elementos);
+    todas_combinacoes(tamanho);
 }
-void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho, int elementos[]){
+
+void combinacao_simples(int n, int r, int x[], int next, int k, int **matrizindices, int *index){
+  if (k == r) {
+    for (int i = 0; i < r; i++) {
+      matrizindices[*index][i] = x[i];
+    }
+    matrizindices[*index][r] = -1;
+    (*index)++;
+  } else {
+    for (int i = next; i < n; i++) {
+      x[k] = i;
+      combinacao_simples(n, r, x, i + 1, k + 1, matrizindices, index);
+    }
+  }
+}
+
+void todas_combinacoes(int n) {
+  int total_matrizindices = (1 << n) - 1;
+  int **matrizindices = (int **)malloc(total_matrizindices * sizeof(int *));
+
+  for (int i = 0; i < total_matrizindices; i++) {
+    matrizindices[i] = (int *)malloc((n + 1) * sizeof(int));
+  }
+
+  int *x = (int *)malloc(n * sizeof(int));
+  int index = 0;
+
+  for (int r = 1; r <= n; r++) {
+    combinacao_simples(n, r, x, 0, 0, matrizindices, &index);
+  }
+
+  for (int i = 0; i < total_matrizindices; i++) {
+    for (int j = 0; j < n; j++) {
+      if (matrizindices[i][j] == -1) {
+        break;
+      }
+    printf("%d ", matrizindices[i][j]);
+    }
+    printf("\n");
+  }
+}
+
+/*void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho, int elementos[]){
     printf("oi");
     int linhas = 0, *x;
     x = malloc((tamanho+1) * sizeof(int));
@@ -95,7 +137,7 @@ void combinacao_simples(int tamanho, int r, int x[], int next, int k, int **mati
         }
     }
 }
-*/
+
 int Fatorial(int tamanho){
     int res = 1;
     for (int i = 1; i <= tamanho; i++){
