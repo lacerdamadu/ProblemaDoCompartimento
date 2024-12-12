@@ -2,6 +2,7 @@
 #define ROCHAMINERAL_H_INCLUDED
 
 typedef struct{
+    int id;
     int Valor;
     double Peso;
 } RochaMineral;

@@ -1,19 +1,22 @@
 #include "Central.h"
 #include "ListaSondas.h"
 #include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
 
 int EntradaPorArquivo(TSondas *ListaSondas){
     printf("Digite o nome do arquivo: ");
     char nome[STRING];
     scanf("%s", nome);
-
+    printf("oi");
     FILE* entrada;
     entrada = fopen(nome, "r");
     if(entrada==NULL){
         printf("Erro ao ler o arquivo.");
         return 0;
     }
-     
+    printf("oi");
     int identificador = 0;
     double PesoMax = 40; // Capacidade de armazenamento
     FazListaVazia(ListaSondas);
@@ -30,11 +33,11 @@ int EntradaPorArquivo(TSondas *ListaSondas){
     Sonda temporaria;
     int id = 10;// identificador diferente para diferenciar das sondas definitivas
     PesoMax = 1000;
-        
+    printf("oi");
     InicializaSonda(&temporaria, id, PesoMax);
 
     fscanf(entrada,"%d", &numrochas);
-    RochaMineral elementos[numrochas];// Vetor que guarda os valores de cada rocha
+    int elementos[numrochas];// Vetor que guarda os ids de cada rocha
     int tamanho = numrochas;
 
     for(int j=0; j<numrochas; j++){
@@ -42,46 +45,78 @@ int EntradaPorArquivo(TSondas *ListaSondas){
         RochaMineral novarocha;
         InicializaRocha(&novarocha, peso, valor);
         Celula novarochaa;
+        novarocha.id = j;
         novarochaa.rocha = novarocha;
         InsereRocha(&temporaria.CompartmentoS, &novarochaa);//insere todas as rochas na sonda temporária para depois redistribuir
         
-        elementos[j] = novarocha;
+        elementos[j] = novarocha.id;
     }
-    Redistribuicao(ListaSondas, &temporaria, elementos, tamanho);
+    printf("oi");
+    Redistribuicao(ListaSondas, &temporaria, tamanho, elementos);
 }
-void Redistribuicao(TSondas *Sondas, Sonda *temporaria, RochaMineral elementosparacombinacao[], int tamanhodoselementos){
-    for (int i = Sondas->Primeiro; i < Sondas->Ultimo; i++){
-        gerarTodasCombinacoes(&Sondas->sonda[i], elementosparacombinacao, tamanhodoselementos);
+void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho, int elementos[]){
+    printf("oi");
+    int *x = (int*) malloc((tamanho+1) * sizeof(int));
+    int linhas = CalculaNumCombinacoes(linhas);
+    
+
+    int** matind = (int**) malloc(sizeof(int*) * linhas);
+    for(int i=0; i <= tamanho; i++){
+        matind[i] = (int*) malloc(sizeof(int) * tamanho+1);
+    }
+
+    memset(matind, -1, sizeof(matind));
+
+    for (int k = 0; k <= tamanho; k++){
+        combinacao_simples(tamanho, k, x, 0, 0, matind);
     }
 }
 
-
-void gerarCombinacoes(Sonda *atual, RochaMineral elementosparacombinacao[], int tamanhodoselementos, int r, int indicedoauxiliar, RochaMineral auxiliar[], int i){
-    if (indicedoauxiliar == r){
-        for (int j = 0; j < r; j++){
-            printf("%d ", auxiliar[j].Valor);
+int pos = 0;
+void combinacao_simples(int tamanho, int r, int x[], int next, int k, int **matind){
+    int i;
+    if (k == r){
+        for (i = 0; i < r; i++){
+            matind[pos][i] = x[i];
+            printf("%d", matind[pos][i]);
         }
-        printf("\n");
-        return;
+        pos++;
     }
-    if(i >= tamanhodoselementos){
-        return;
-    }
-    auxiliar[indicedoauxiliar] = elementosparacombinacao[i];
-    gerarCombinacoes(atual, elementosparacombinacao, tamanhodoselementos, r, indicedoauxiliar + 1, auxiliar, i + 1);
-
-    gerarCombinacoes(atual, elementosparacombinacao, tamanhodoselementos, r, indicedoauxiliar, auxiliar, i + 1);
-}
-
-void gerarTodasCombinacoes(Sonda *atual, RochaMineral elementosparacombinacao[], int tamanhodoselementos){
-    for (int r = 1; r <= tamanhodoselementos; r++) {
-        RochaMineral auxiliar[r]; 
-        gerarCombinacoes(atual, elementosparacombinacao, tamanhodoselementos, r, 0, auxiliar, 0);
+    else{
+        for (i = next; i < tamanho; i++){
+            x[k] = i;
+            combinacao_simples(tamanho, r, x, i + 1, k + 1, matind);
+        }
     }
 }
 
-usados = [0,0,0,0,0,0,0]
-for i in range(3):
+int Fatorial(int tamanho){
+    int res = 1;
+    for (int i = 1; i <= tamanho; i++){
+        res *= i;
+    }
+    return res;
+}
+int Combinacao(int tamanho, int k){
+    if (k > tamanho)
+        return 0;
+    return (int)(Fatorial(tamanho) / (Fatorial(k) * Fatorial(tamanho - k)));
+}
+
+int CalculaNumCombinacoes(int tamanho){
+    int sum = 0;
+    for (int k = 1; k <= tamanho; k++)
+    {
+        sum += Combinacao(tamanho, k);
+    }
+    return sum;
+}
+
+
+
+/* int usados[] = [0,0,0,0,0,0,0];
+for(int i=0; i<3; i++){
+}
     melhor_comb = []
     melhor_valor = -1
     for comb in  [[0,7], [5,8]]:
@@ -97,5 +132,5 @@ for i in range(3):
             melhor_comb = comb
     
     for rocha in melhor_comb:
-        usados[rocha] = 1
-        
+        usados[rocha] = 1*/
+

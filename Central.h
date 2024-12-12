@@ -6,8 +6,11 @@
 
 
 int EntradaPorArquivo(TSondas *Sondas);
-void Redistribuicao(TSondas *Sondas, Sonda *temporaria, RochaMineral elementosparacombinacao[], int tamanhodoselementos);
-void gerarCombinacoes(Sonda *atual, RochaMineral elementosparacombinacao[], int tamanhodoselementos, int r, int indicedoauxiliar, RochaMineral auxiliar[], int i);
-void gerarTodasCombinacoes(Sonda *atual, RochaMineral elementosparacombinacao[], int tamanhodoselementos);
+void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho, int elementos[]);
+void combinacao_simples(int tamanho, int r, int x[], int next, int k, int **matind);
+int Fatorial(int n);
+int Combinacao(int n, int k);
+int CalculaNumCombinacoes(int n);
+
 
 #endif
