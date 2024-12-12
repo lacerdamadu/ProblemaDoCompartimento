@@ -57,11 +57,9 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, RochaMineral elementospa
 
 
 void gerarCombinacoes(Sonda *atual, RochaMineral elementosparacombinacao[], int tamanhodoselementos, int r, int indicedoauxiliar, RochaMineral auxiliar[], int i){
-    int valorcombinaçãotual = 0;
     if (indicedoauxiliar == r){
         for (int j = 0; j < r; j++){
             printf("%d ", auxiliar[j].Valor);
-            
         }
         printf("\n");
         return;
@@ -81,3 +79,23 @@ void gerarTodasCombinacoes(Sonda *atual, RochaMineral elementosparacombinacao[],
         gerarCombinacoes(atual, elementosparacombinacao, tamanhodoselementos, r, 0, auxiliar, 0);
     }
 }
+
+usados = [0,0,0,0,0,0,0]
+for i in range(3):
+    melhor_comb = []
+    melhor_valor = -1
+    for comb in  [[0,7], [5,8]]:
+        for rocha in comb:
+            if usados[rocha] :
+                comb_invalida = True 
+        
+        valor = val(comb)
+        peso = peso(comb)
+
+        if peso < capa and valor > melhor_valor and not comb_invalida:
+            melhor_valor = valor
+            melhor_comb = comb
+    
+    for rocha in melhor_comb:
+        usados[rocha] = 1
+        
