@@ -1,7 +1,6 @@
 #ifndef ROCHAMINERAL_H_INCLUDED
 #define ROCHAMINERAL_H_INCLUDED
 
-
 typedef struct{
     int Valor;
     double Peso;

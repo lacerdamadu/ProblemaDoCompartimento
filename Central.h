@@ -6,8 +6,8 @@
 
 
 int EntradaPorArquivo(TSondas *Sondas);
-void Redistribuicao(TSondas *Sondas, TSondas *temporario, R elementosparacombinacao[], int tamanhodoselementos);
-void gerarCombinacoes(int elementosparacombinacao[], int tamanhodoselementos, int r, int indicedoauxiliar, int auxiliar[], int i)
-void gerarTodasCombinacoes(int elementosparacombinacao[], int tamanhodoselementos);
+void Redistribuicao(TSondas *Sondas, Sonda *temporaria, RochaMineral elementosparacombinacao[], int tamanhodoselementos);
+void gerarCombinacoes(RochaMineral elementosparacombinacao[], int tamanhodoselementos, int r, int indicedoauxiliar, RochaMineral auxiliar[], int i);
+void gerarTodasCombinacoes(RochaMineral elementosparacombinacao[], int tamanhodoselementos);
 
 #endif

@@ -11,6 +11,6 @@ typedef struct {
 
 void FazListaVazia(TSondas* Sondas);
 int InsereSonda(TSondas* Sondas, Sonda* sonda);
-void ImprimeSonda(TSondas* Sondas);
+int ImprimiSondas(TSondas *Sondas);
 
 #endif

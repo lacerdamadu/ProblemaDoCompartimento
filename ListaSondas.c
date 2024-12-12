@@ -12,11 +12,12 @@ int InsereSonda(TSondas* Sondas, Sonda* sonda){
     Sondas->sonda[Sondas->Ultimo++] = *sonda;
     return 1;
 }
-void ImprimeSonda(TSondas* Sondas){
+int ImprimiSondas(TSondas *Sondas){
     int i;
     for (i = Sondas->Primeiro; i < Sondas->Ultimo; i++){
         ImprimiLista(&Sondas->sonda->CompartmentoS);
         printf("%d\n", Sondas->sonda->Identificador);
     }
     ImprimiLista(&Sondas->sonda->CompartmentoS);
+    return 0;
 }

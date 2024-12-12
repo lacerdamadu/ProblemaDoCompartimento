@@ -30,12 +30,13 @@ int EntradaPorArquivo(TSondas *ListaSondas){
     Sonda temporaria;
     int id = 10;// identificador diferente para diferenciar das sondas definitivas
     PesoMax = 1000;
-    RochaMineral elementos[numrochas];// Vetor que guarda os valores de cada rocha
-    int tamanho = numrochas;
         
     InicializaSonda(&temporaria, id, PesoMax);
 
-    fscanf(entrada, "%d", numrochas);
+    fscanf(entrada,"%d", &numrochas);
+    RochaMineral elementos[numrochas];// Vetor que guarda os valores de cada rocha
+    int tamanho = numrochas;
+
     for(int j=0; j<numrochas; j++){
         fscanf(entrada, "%d""%d", &peso, &valor);
         RochaMineral novarocha;
@@ -46,15 +47,17 @@ int EntradaPorArquivo(TSondas *ListaSondas){
         
         elementos[j] = novarocha;
     }
-    gerarTodasCombinacoes(elementos, tamanho);
+    Redistribuicao(ListaSondas, &temporaria, elementos, tamanho);
 }
-void Redistribuição(){
+void Redistribuicao(TSondas *Sondas, Sonda *temporaria, RochaMineral elementosparacombinacao[], int tamanhodoselementos){
+    gerarTodasCombinacoes(elementosparacombinacao, tamanhodoselementos);
+}
 
-}
-void gerarCombinacoes(int elementosparacombinacao[], int tamanhodoselementos, int r, int indicedoauxiliar, int auxiliar[], int i){
+
+void gerarCombinacoes(RochaMineral elementosparacombinacao[], int tamanhodoselementos, int r, int indicedoauxiliar, RochaMineral auxiliar[], int i){
     if (indicedoauxiliar == r) {
         for (int j = 0; j < r; j++) {
-            printf("%d ", auxiliar[j]);
+            printf("%d ", auxiliar[j].Valor);
         }
         printf("\n");
     return;
@@ -70,7 +73,7 @@ void gerarCombinacoes(int elementosparacombinacao[], int tamanhodoselementos, in
     gerarCombinacoes(elementosparacombinacao, tamanhodoselementos, r, indicedoauxiliar, auxiliar, i + 1);
 }
 
-void gerarTodasCombinacoes(int elementosparacombinacao[], int tamanhodoselementos){
+void gerarTodasCombinacoes(RochaMineral elementosparacombinacao[], int tamanhodoselementos){
     for (int r = 1; r <= tamanhodoselementos; r++) {
         RochaMineral auxiliar[r]; 
         gerarCombinacoes(elementosparacombinacao, tamanhodoselementos, r, 0, auxiliar, 0);
