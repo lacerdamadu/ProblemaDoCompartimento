@@ -79,6 +79,7 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
             melhorvalor = valoratual;
             melhorcombinacao = combtual;
         }
+        pAux = *pAux.pProx;
     }
     printf("%d", melhorcombinacao);
 }
