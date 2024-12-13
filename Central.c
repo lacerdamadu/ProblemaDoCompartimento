@@ -37,6 +37,9 @@ int EntradaPorArquivo(TSondas *ListaSondas){
     InicializaSonda(&temporaria, id, PesoMax);
 
     fscanf(entrada,"%d", &numrochas);
+
+    int vet[numrochas];
+
     int tamanho = numrochas;
 
     for(int j=0; j<numrochas; j++){
@@ -60,14 +63,20 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
 
     int melhorvalor = 0, valoratual = 0;
     int total_matrizindices = (1 << tamanho) - 1;
+
     Celula pAux = *temporaria->CompartmentoS.primeiro->pProx;
 
     for(int i=0; i<tamanho; i++){
         RochasUtilizadas[i] = -1;
     }
+
     for(int j=0;j<total_matrizindices;j++){
         combtual = j;
         for(int k=0; k<tamanho; k++){
+            if(auxmatrizes[j][k] == -1){
+                break;
+            }
+
             valoratual += pAux.rocha.Valor;
         }
         if(valoratual >= melhorvalor){
