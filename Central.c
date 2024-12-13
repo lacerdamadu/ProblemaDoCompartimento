@@ -48,43 +48,41 @@ int EntradaPorArquivo(TSondas *ListaSondas){
         novarochaa.rocha = novarocha;
         InsereRocha(&temporaria.CompartmentoS, &novarochaa);//insere todas as rochas na sonda temporária para depois redistribuir
     }
-    TodasCombinacoes(tamanho);
+    Redistribuicao(ListaSondas, &temporaria, numrochas);
 }
 
 void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
-    int ** aux = TodasCombinacoes(tamanho);
+    int ** auxmatrizes= TodasCombinacoes(tamanho);
+    printf("oi");
     int RochasUtilizadas[tamanho];
-    int melhorcombinacao[tamanho];
-    int combtual[tamanho];
+    int melhorcombinacao = -1;
+    int combtual = -1;
 
     int melhorvalor = 0, valoratual = 0;
     int total_matrizindices = (1 << tamanho) - 1;
-    RochaMineral Aux;
+    Celula pAux = *temporaria->CompartmentoS.primeiro->pProx;
 
     for(int i=0; i<tamanho; i++){
         RochasUtilizadas[i] = -1;
-        melhorcombinacao[i] = -1;
-        combtual[i] = -1;
     }
     for(int j=0;j<total_matrizindices;j++){
+        combtual = j;
         for(int k=0; k<tamanho; k++){
-            Aux.id = total_matrizindices[j][k];
-            combtual[j] = total_matrizindices[j][k];
-            valoratual += Aux.Valor;
+            valoratual += pAux.rocha.Valor;
         }
         if(valoratual >= melhorvalor){
             if (valoratual > 40){
-                
-                break;
+                for(int m=0; m<tamanho; m++){
+                    auxmatrizes[j][m] = -1;
+                }
             }
             melhorvalor = valoratual;
-            for(int l=0; l<tamanho;l++){
-                melhorcombinacao[l] = total_matrizindices[l][j];
-            }
+            melhorcombinacao = combtual;
         }
     }
-
+    printf("%d", melhorcombinacao);
 }
+
 
 void CombinacaoSimples(int n, int r, int x[], int next, int k, int **matrizindices, int *index){
     if (k == r) {
@@ -123,9 +121,7 @@ int** TodasCombinacoes(int n){
         if (matrizindices[i][j] == -1) {
             break;
         }
-        printf("%d ", matrizindices[i][j]);
         }
-        printf("\n");
     }
     return matrizindices;
 }
