@@ -60,11 +60,14 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
     int ** auxmatrizes= TodasCombinacoes(tamanho);
 
     int RochasUtilizadas[tamanho];
+
     int melhorcombinacao = -1;
-    int combtual = -1;
+    int combtual;
 
     int melhorvalor = 0, valoratual;
-    double pesoatual;
+
+    double pesoatual, melhorpeso;
+
     int total_matrizindices = (1 << tamanho) - 1;
 
 
@@ -106,6 +109,7 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
 
                         valoratual += pAux->rocha.Valor;
                         pesoatual += pAux->rocha.Peso;
+
                     }
                     pAux = pAux->pProx;
                 }
@@ -115,9 +119,6 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
                 
                 
             }
-
-            //printf("valor da linha %d: %d\n", j, valoratual);
-            //printf("peso da linha %d: %0.lf\n", j, pesoatual);
             
             pAux = temporaria->CompartmentoS.primeiro->pProx;
             
@@ -130,9 +131,23 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
                 } else {
                     melhorvalor = valoratual;
                     melhorcombinacao = combtual;
+                    melhorpeso = pesoatual;
                 }
             }
             
+        }
+
+        int a = 0;
+
+
+        printf("Sonda %d: Peso %0.lf, Valor %d, Solucao [", atual+1, melhorpeso, melhorvalor);
+        while (auxmatrizes[melhorcombinacao][a] != -1){
+            if(auxmatrizes[melhorcombinacao][a+1] == -1){
+                printf("%d]\n", auxmatrizes[melhorcombinacao][a]);
+            } else {
+            printf("%d ", auxmatrizes[melhorcombinacao][a]);
+            }
+            a++;
         }
 
         for(int d = 0; d < tamanho; d ++){
@@ -141,8 +156,6 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
             }
             RochasUtilizadas[auxmatrizes[melhorcombinacao][d]] = 0;
         }
-        
-        printf("(%d) melhor combinacao (linha da matriz) %d\n", atual+1, melhorcombinacao);
 
         int g = 0;
 
@@ -170,10 +183,10 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
         }
     }
 
-    for(int g = 0; g < MaxTam; g++){
+    /*for(int g = 0; g < MaxTam; g++){
         printf("sonda %d:\n", g);
         ImprimiLista(&Sondas->sonda[g].CompartmentoS);
-    }
+    }/**/
     
 
     
