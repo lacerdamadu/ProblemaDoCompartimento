@@ -60,19 +60,26 @@ int EntradaPorArquivo(TSondas *ListaSondas){
 void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
     int ** auxmatrizes= TodasCombinacoes(tamanho);
     int RochasUtilizadas[tamanho];
-    int melhorcombinacao = -1;
-    int combtual;
+
+    int melhorcombinacao, combtual;
+
     int melhorvalor = 0, valoratual;
+
     double pesoatual, melhorpeso;
+
     int total_matrizindices = (1 << tamanho) - 1;
+
     Celula* pAux = temporaria->CompartmentoS.primeiro->pProx;
     
     for(int i=0; i<tamanho; i++){
         RochasUtilizadas[i] = 1;
     }
     for(int atual = 0; atual < MaxTam; atual++){
-        melhorcombinacao = -1; combtual = -1; melhorvalor = -1;
+
+        melhorcombinacao = -1; melhorpeso = 0; melhorvalor = -1;
+
         for(int j=0;j<total_matrizindices;j++){
+
             valoratual = 0; pesoatual = 0;
             combtual = j;
             for(int k=0; k<tamanho; k++){
@@ -95,6 +102,7 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
                     pAux = pAux->pProx;
                 }
                 pAux = temporaria->CompartmentoS.primeiro->pProx;
+                
             }
             pAux = temporaria->CompartmentoS.primeiro->pProx;
             if(valoratual >= melhorvalor){
