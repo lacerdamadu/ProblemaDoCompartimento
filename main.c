@@ -10,6 +10,7 @@ int main(){
     double tempofinal;
 
     comeco = clock();
+
     for (long i = 0; i < 1000000000; i++);
     final = clock();
 
