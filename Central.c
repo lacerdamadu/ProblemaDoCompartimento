@@ -110,9 +110,9 @@ int** TodasCombinacoes(int n){
     for (int i = 0; i < total_matrizindices; i++) {
         matrizindices[i] = (int *)malloc((n + 1) * sizeof(int));
     }
-
     int *x = (int *)malloc(n * sizeof(int));
     int index = 0;
+
 
     for (int r = 1; r <= n; r++) {
         CombinacaoSimples(n, r, x, 0, 0, matrizindices, &index);
