@@ -50,47 +50,133 @@ int EntradaPorArquivo(TSondas *ListaSondas){
         Celula novarochaa;
         novarochaa.rocha = novarocha;
         InsereRocha(&temporaria.CompartmentoS, &novarochaa);//insere todas as rochas na sonda temporária para depois redistribuir
+
     }
+    
     Redistribuicao(ListaSondas, &temporaria, numrochas);
 }
 
 void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
     int ** auxmatrizes= TodasCombinacoes(tamanho);
-    printf("oi");
+
     int RochasUtilizadas[tamanho];
     int melhorcombinacao = -1;
     int combtual = -1;
 
-    int melhorvalor = 0, valoratual = 0;
+    int melhorvalor = 0, valoratual;
+    double pesoatual;
     int total_matrizindices = (1 << tamanho) - 1;
 
-    Celula pAux = *temporaria->CompartmentoS.primeiro->pProx;
+
+    Celula* pAux = temporaria->CompartmentoS.primeiro->pProx;
+    
+
 
     for(int i=0; i<tamanho; i++){
-        RochasUtilizadas[i] = -1;
+        RochasUtilizadas[i] = 1;
     }
 
-    for(int j=0;j<total_matrizindices;j++){
-        combtual = j;
-        for(int k=0; k<tamanho; k++){
-            if(auxmatrizes[j][k] == -1){
-                break;
+    for(int atual = 0; atual < MaxTam; atual++){
+
+        melhorcombinacao = -1; combtual = -1; melhorvalor = -1;
+
+        for(int j=0;j<total_matrizindices;j++){
+
+
+            valoratual = 0; pesoatual = 0;
+
+            combtual = j;
+
+            for(int k=0; k<tamanho; k++){
+
+                if(auxmatrizes[j][k] == -1){
+                    break;
+                } if(!RochasUtilizadas[auxmatrizes[j][k]]){
+                        break;
+                }
+
+                pAux = temporaria->CompartmentoS.primeiro->pProx;
+
+                for(int h = 0; h <= auxmatrizes[j][k]; h++) {
+                    if(pAux == NULL){
+                        break;
+                    }
+
+                    if(pAux->rocha.id == auxmatrizes[j][k] && RochasUtilizadas[auxmatrizes[j][k]]){
+
+                        valoratual += pAux->rocha.Valor;
+                        pesoatual += pAux->rocha.Peso;
+                    }
+                    pAux = pAux->pProx;
+                }
+
+                pAux = temporaria->CompartmentoS.primeiro->pProx;
+
+                
+                
             }
 
-            valoratual += pAux.rocha.Valor;
-        }
-        if(valoratual >= melhorvalor){
-            if (valoratual > 40){
-                for(int m=0; m<tamanho; m++){
-                    auxmatrizes[j][m] = -1;
+            //printf("valor da linha %d: %d\n", j, valoratual);
+            //printf("peso da linha %d: %0.lf\n", j, pesoatual);
+            
+            pAux = temporaria->CompartmentoS.primeiro->pProx;
+            
+
+            if(valoratual >= melhorvalor){
+                if (pesoatual > 40){
+                    for(int m=0; m<tamanho; m++){
+                        auxmatrizes[j][m] = -1;
+                    }
+                } else {
+                    melhorvalor = valoratual;
+                    melhorcombinacao = combtual;
                 }
             }
-            melhorvalor = valoratual;
-            melhorcombinacao = combtual;
+            
         }
-        pAux = *pAux.pProx;
+
+        for(int d = 0; d < tamanho; d ++){
+            if(auxmatrizes[melhorcombinacao][d]==-1){
+                break;
+            }
+            RochasUtilizadas[auxmatrizes[melhorcombinacao][d]] = 0;
+        }
+        
+        printf("(%d) melhor combinacao (linha da matriz) %d\n", atual+1, melhorcombinacao);
+
+        int g = 0;
+
+        Celula *RochaRemovida;
+
+
+        if(!VerificaListaVazia(&temporaria->CompartmentoS)){
+
+            while (auxmatrizes[melhorcombinacao][g]!= -1){
+
+                pAux = temporaria->CompartmentoS.primeiro->pProx;
+
+                while(pAux!= NULL){
+                    if(auxmatrizes[melhorcombinacao][g] == pAux->rocha.id){
+
+                        RochaRemovida = RemoveRocha(&temporaria->CompartmentoS, pAux);
+                        InsereRocha(&Sondas->sonda[atual].CompartmentoS, RochaRemovida);
+                        auxmatrizes[melhorcombinacao][g] = -1;
+
+                    }
+                    pAux = pAux->pProx;
+                }
+                g++;
+            }    
+        }
     }
-    printf("%d", melhorcombinacao);
+
+    for(int g = 0; g < MaxTam; g++){
+        printf("sonda %d:\n", g);
+        ImprimiLista(&Sondas->sonda[g].CompartmentoS);
+    }
+    
+
+    
 }
 
 
@@ -126,12 +212,14 @@ int** TodasCombinacoes(int n){
         CombinacaoSimples(n, r, x, 0, 0, matrizindices, &index);
     }
 
-    for (int i = 0; i < total_matrizindices; i++) {
+    /*for (int i = 0; i < total_matrizindices; i++) {
         for (int j = 0; j < n; j++) {
         if (matrizindices[i][j] == -1) {
             break;
         }
         }
-    }
+    }*/
+
+
     return matrizindices;
 }

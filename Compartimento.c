@@ -67,9 +67,9 @@ double PesoAtual(Compartimento *lista){
 }*/
 
 int InsereRocha(Compartimento *lista, Celula* rocha){
-    if(VerificaListaVazia(lista)){
+    /*if(VerificaListaVazia(lista)){
         return 0;
-    }
+    }*/
     lista->ultimo->pProx = (Celula*) malloc(sizeof(Celula));
     lista->ultimo = lista->ultimo->pProx;
     *lista->ultimo = *rocha;
