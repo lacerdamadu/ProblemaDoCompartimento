@@ -6,7 +6,7 @@
 
 
 int EntradaPorArquivo(TSondas *Sondas);
-void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho, int elementos[]);
+void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho);
 int ** TodasCombinacoes(int n);
 void CombinacaoSimples(int n, int r, int x[], int next, int k, int **matrizindices, int *index);
 
