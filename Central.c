@@ -59,10 +59,9 @@ int EntradaPorArquivo(TSondas *ListaSondas){
 
 void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
     int ** auxmatrizes= TodasCombinacoes(tamanho);
-
     int RochasUtilizadas[tamanho];
 
-    int melhorcombinacao = -1, combtual;
+    int melhorcombinacao, combtual;
 
     int melhorvalor = 0, valoratual;
 
@@ -75,7 +74,6 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
     for(int i=0; i<tamanho; i++){
         RochasUtilizadas[i] = 1;
     }
-
     for(int atual = 0; atual < MaxTam; atual++){
 
         melhorcombinacao = -1; melhorpeso = 0; melhorvalor = -1;
@@ -83,41 +81,30 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
         for(int j=0;j<total_matrizindices;j++){
 
             valoratual = 0; pesoatual = 0;
-
             combtual = j;
-
             for(int k=0; k<tamanho; k++){
-
                 if(auxmatrizes[j][k] == -1){
                     break;
                 } if(!RochasUtilizadas[auxmatrizes[j][k]]){
                         valoratual = -1;
                         break;
                 }
-
                 pAux = temporaria->CompartmentoS.primeiro->pProx;
-
                 for(int h = 0; h <= auxmatrizes[j][k]; h++) {
                     if(pAux == NULL){
                         break;
                     }
 
                     if(pAux->rocha.id == auxmatrizes[j][k] && RochasUtilizadas[auxmatrizes[j][k]]){
-
                         valoratual += pAux->rocha.Valor;
                         pesoatual += pAux->rocha.Peso;
-
                     }
                     pAux = pAux->pProx;
                 }
-
                 pAux = temporaria->CompartmentoS.primeiro->pProx;
-   
+                
             }
-            
             pAux = temporaria->CompartmentoS.primeiro->pProx;
-            
-
             if(valoratual >= melhorvalor){
                 if (pesoatual > 40){
                     for(int m=0; m<tamanho; m++){
@@ -129,12 +116,8 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
                     melhorpeso = pesoatual;
                 }
             }
-            
         }
-
         int a = 0;
-
-
         printf("Sonda %d: Peso %0.lf, Valor %d, Solucao [", atual+1, melhorpeso, melhorvalor);
         while (auxmatrizes[melhorcombinacao][a] != -1){
             if(auxmatrizes[melhorcombinacao][a+1] == -1){
