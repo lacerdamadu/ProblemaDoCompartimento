@@ -62,8 +62,7 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
 
     int RochasUtilizadas[tamanho];
 
-    int melhorcombinacao = -1;
-    int combtual;
+    int melhorcombinacao = -1, combtual;
 
     int melhorvalor = 0, valoratual;
 
@@ -71,21 +70,17 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
 
     int total_matrizindices = (1 << tamanho) - 1;
 
-
     Celula* pAux = temporaria->CompartmentoS.primeiro->pProx;
     
-
-
     for(int i=0; i<tamanho; i++){
         RochasUtilizadas[i] = 1;
     }
 
     for(int atual = 0; atual < MaxTam; atual++){
 
-        melhorcombinacao = -1; combtual = -1; melhorvalor = -1;
+        melhorcombinacao = -1; melhorpeso = 0; melhorvalor = -1;
 
         for(int j=0;j<total_matrizindices;j++){
-
 
             valoratual = 0; pesoatual = 0;
 
@@ -117,9 +112,7 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
                 }
 
                 pAux = temporaria->CompartmentoS.primeiro->pProx;
-
-                
-                
+   
             }
             
             pAux = temporaria->CompartmentoS.primeiro->pProx;
