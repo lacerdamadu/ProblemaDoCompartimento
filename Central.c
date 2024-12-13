@@ -102,7 +102,7 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
                     pAux = pAux->pProx;
                 }
                 pAux = temporaria->CompartmentoS.primeiro->pProx;
-                
+
             }
             pAux = temporaria->CompartmentoS.primeiro->pProx;
             if(valoratual >= melhorvalor){
@@ -121,12 +121,13 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
         printf("Sonda %d: Peso %0.lf, Valor %d, Solucao [", atual+1, melhorpeso, melhorvalor);
         while (auxmatrizes[melhorcombinacao][a] != -1){
             if(auxmatrizes[melhorcombinacao][a+1] == -1){
-                printf("%d]\n", auxmatrizes[melhorcombinacao][a]);
+                printf("%d", auxmatrizes[melhorcombinacao][a]);
             } else {
             printf("%d ", auxmatrizes[melhorcombinacao][a]);
             }
             a++;
         }
+        printf("]\n");
 
         for(int d = 0; d < tamanho; d ++){
             if(auxmatrizes[melhorcombinacao][d]==-1){
