@@ -54,6 +54,7 @@ int EntradaPorArquivo(TSondas *ListaSondas){
     }
     
     Redistribuicao(ListaSondas, &temporaria, numrochas);
+
 }
 
 void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
@@ -95,6 +96,7 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
                 if(auxmatrizes[j][k] == -1){
                     break;
                 } if(!RochasUtilizadas[auxmatrizes[j][k]]){
+                        valoratual = -1;
                         break;
                 }
 
@@ -183,12 +185,7 @@ void Redistribuicao(TSondas *Sondas, Sonda *temporaria, int tamanho){
         }
     }
 
-    /*for(int g = 0; g < MaxTam; g++){
-        printf("sonda %d:\n", g);
-        ImprimiLista(&Sondas->sonda[g].CompartmentoS);
-    }/**/
-    
-
+    LiberaMemoria(Sondas, auxmatrizes);
     
 }
 
@@ -225,14 +222,23 @@ int** TodasCombinacoes(int n){
         CombinacaoSimples(n, r, x, 0, 0, matrizindices, &index);
     }
 
-    /*for (int i = 0; i < total_matrizindices; i++) {
-        for (int j = 0; j < n; j++) {
-        if (matrizindices[i][j] == -1) {
-            break;
-        }
-        }
-    }*/
-
 
     return matrizindices;
+}
+
+
+void LiberaMemoria(TSondas *Sondas, int ** MatrizDinamica){
+    for(int i = 0; i < MaxTam; i++){
+        Celula* atual = Sondas->sonda[i].CompartmentoS.primeiro->pProx;
+        Celula* proximo;
+        
+        while (atual != NULL) {
+            proximo = atual->pProx; 
+            free(atual);            
+            atual = proximo;        
+        }
+    }
+
+    free(MatrizDinamica);
+
 }
